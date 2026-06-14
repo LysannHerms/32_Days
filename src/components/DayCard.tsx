@@ -36,7 +36,7 @@ function DayCard({
     : isToday
     ? "bg-white text-[var(--challenge-dark)] ring-4 ring-[var(--challenge-primary)]"
     : isFuture
-    ? "bg-white/60 text-[var(--challenge-dark)]"
+    ? "bg-white/90 text-[var(--challenge-dark)]"
     : "bg-[var(--challenge-card)] text-[var(--challenge-dark)]";
 
   const dotStyle = isDone ? "text-white" : "text-[var(--challenge-primary)]";
@@ -70,7 +70,7 @@ function DayCard({
         </div>
 
         <p className="mt-4 line-clamp-2 text-sm font-semibold opacity-80">
-          🎲 {day.funQuest}
+          {day.funQuest}
         </p>
       </button>
 

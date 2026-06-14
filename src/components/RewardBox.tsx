@@ -5,9 +5,8 @@ type RewardBoxProps = {
 function RewardBox({ isUnlocked }: RewardBoxProps) {
   return (
     <section className="mx-auto mt-16 max-w-3xl rounded-3xl bg-[var(--challenge-card)] p-6 text-center text-[var(--challenge-dark)] shadow-sm">
-      <p className="text-4xl">{isUnlocked ? "🎁" : "🔒"}</p>
 
-      <h2 className="mt-3 text-3xl font-black">
+      <h2 className=" text-3xl font-black">
         {isUnlocked ? "Belohnung freigeschaltet!" : "Belohnung wartet auf dich"}
       </h2>
 
