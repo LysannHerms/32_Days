@@ -5,7 +5,6 @@ import ChallengeHistory from "./components/ChallengeHistory";
 import ProgressBar from "./components/ProgressBar";
 import RewardBox from "./components/RewardBox";
 import { useChallenge } from "./hooks/useChallenge";
-import { getCompletedHabits } from "./utils/challengeProgress";
 import { getCurrentChallengeDay } from "./utils/challengeStatus";
 
 function App() {
@@ -21,9 +20,7 @@ function App() {
 
   const currentDay = getCurrentChallengeDay(challengeStart);
 
-  const completedDays = days.filter(
-    (day) => getCompletedHabits(day) === 3
-  ).length;
+  const completedDays = Math.min(Math.max(currentDay - 1, 0), 32);
 
   const rewardUnlocked = currentDay > 32;
 
