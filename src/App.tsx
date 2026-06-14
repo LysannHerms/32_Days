@@ -28,7 +28,7 @@ function App() {
   const rewardUnlocked = currentDay > 32;
 
   return (
-    <main className="min-h-screen bg-[var(--challenge-bg)] bg-[linear-gradient(var(--challenge-grid)_1px,transparent_1px),linear-gradient(90deg,var(--challenge-grid)_1px,transparent_1px)] bg-[size:64px_64px] px-6 py-10">
+    <main className="min-h-screen bg-[var(--challenge-bg)] bg-[linear-gradient(var(--challenge-grid)_1px,transparent_1px),linear-gradient(90deg,var(--challenge-grid)_1px,transparent_1px)] bg-[size:80px_80px] px-6 py-10">
       <ChallengeHeader />
       <ChallengePeriod startDate={challengeStart} endDate={challengeEnd} />
 

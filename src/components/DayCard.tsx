@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Day, HabitKey } from "../types/challenge";
-import QuestDrawer from "./QuestDrawer";
 import { getCompletedHabits } from "../utils/challengeProgress";
+import DayModal from "./DayModal";
 
 type DayCardProps = {
   day: Day;
@@ -10,12 +10,6 @@ type DayCardProps = {
   onUpdateMovementNote: (dayNumber: number, text: string) => void;
   onUpdateFunNote: (dayNumber: number, text: string) => void;
 };
-
-const habits: { key: HabitKey; label: string }[] = [
-  { key: "calories", label: "Kalorien" },
-  { key: "movement", label: "Bewegung" },
-  { key: "fun", label: "Spaßquest" },
-];
 
 function DayCard({
   day,
@@ -28,26 +22,22 @@ function DayCard({
 
   const completedHabits = getCompletedHabits(day);
   const isToday = day.day === currentDay;
-  const isFuture = day.day > currentDay;
   const isDone = completedHabits === 3;
 
   const cardStyle = isDone
     ? "bg-[var(--challenge-primary)] text-white"
     : isToday
     ? "bg-white text-[var(--challenge-dark)] ring-4 ring-[var(--challenge-primary)]"
-    : isFuture
-    ? "bg-white/90 text-[var(--challenge-dark)]"
     : "bg-[var(--challenge-card)] text-[var(--challenge-dark)]";
 
-  const dotStyle = isDone ? "text-white" : "text-[var(--challenge-primary)]";
-
   return (
-    <article className={`rounded-3xl p-4 shadow-sm transition-all ${cardStyle}`}>
-      <button
-        onClick={() => setIsOpen((current) => !current)}
-        className="w-full text-left"
-      >
-        <div className="flex items-start justify-between gap-3">
+  <>
+    <button
+      onClick={() => setIsOpen(true)}
+      className={`min-h-28 rounded-3xl p-8 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${cardStyle}`}
+    >
+      <div className="flex h-full flex-col justify-between">
+        <div className="flex items-start justify-between gap-4">
           <div>
             {isToday && (
               <p className="mb-1 text-xs font-black uppercase tracking-widest">
@@ -55,57 +45,39 @@ function DayCard({
               </p>
             )}
 
-            <h2 className="text-3xl font-black">Tag {day.day}</h2>
-
-            <p className="mt-1 text-sm font-black">
-              {completedHabits}/3 erledigt
-            </p>
+            <h2
+              className={`font-black ${
+                isToday ? "text-5xl" : "text-3xl"
+              }`}
+            >
+              Tag {day.day}
+            </h2>
           </div>
 
-          <div className={`text-xl ${dotStyle}`}>
-            {habits.map((habit) =>
-              day.habits[habit.key] ? "●" : "○"
-            )}
+          <div className="pt-1 text-lg tracking-tight">
+            {Object.values(day.habits).map((isChecked, index) => (
+              <span key={index}>{isChecked ? "●" : "○"}</span>
+            ))}
           </div>
         </div>
 
-        <p className="mt-4 line-clamp-2 text-sm font-semibold opacity-80">
-          {day.funQuest}
+        <p className="mt-5 text-sm font-black">
+          {completedHabits}/3 erledigt
         </p>
-      </button>
+      </div>
+    </button>
 
-      {isOpen && (
-        <div className="mt-4">
-          <div className="space-y-2">
-            {habits.map((habit) => {
-              const habitDone = day.habits[habit.key];
-
-              return (
-                <button
-                  key={habit.key}
-                  onClick={() => onToggleHabit(day.day, habit.key)}
-                  className={`w-full rounded-2xl px-4 py-3 text-left font-semibold ${
-                    habitDone
-                      ? "bg-[var(--challenge-primary)] text-white"
-                      : "bg-white text-[var(--challenge-dark)]"
-                  }`}
-                >
-                  {habitDone ? "✓ " : "○ "}
-                  {habit.label}
-                </button>
-              );
-            })}
-          </div>
-
-          <QuestDrawer
-            day={day}
-            onUpdateMovementNote={onUpdateMovementNote}
-            onUpdateFunNote={onUpdateFunNote}
-          />
-        </div>
-      )}
-    </article>
-  );
+    {isOpen && (
+      <DayModal
+        day={day}
+        onClose={() => setIsOpen(false)}
+        onToggleHabit={onToggleHabit}
+        onUpdateMovementNote={onUpdateMovementNote}
+        onUpdateFunNote={onUpdateFunNote}
+      />
+    )}
+  </>
+);
 }
 
 export default DayCard;
