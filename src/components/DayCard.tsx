@@ -34,37 +34,37 @@ function DayCard({
   <>
     <button
       onClick={() => setIsOpen(true)}
-      className={`min-h-28 rounded-3xl p-8 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md ${cardStyle}`}
+      className={`min-h-40 rounded-3xl p-5 text-left shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md sm:min-h-32 sm:p-6 ${cardStyle}`}
     >
       <div className="flex h-full flex-col justify-between">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            {isToday && (
-              <p className="mb-1 text-xs font-black uppercase tracking-widest">
-                Heute
-              </p>
-            )}
-
-            <h2
-              className={`font-black ${
-                isToday ? "text-5xl" : "text-3xl"
-              }`}
-            >
-              Tag {day.day}
-            </h2>
-          </div>
-
-          <div className="pt-1 text-lg tracking-tight">
-            {Object.values(day.habits).map((isChecked, index) => (
-              <span key={index}>{isChecked ? "●" : "○"}</span>
-            ))}
-          </div>
-        </div>
-
-        <p className="mt-5 text-sm font-black">
-          {completedHabits}/3 erledigt
+  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      {isToday && (
+        <p className="mb-1 text-xs font-black uppercase tracking-widest">
+          Heute
         </p>
-      </div>
+      )}
+
+      <h2
+        className={`font-black leading-none ${
+          isToday ? "text-5xl sm:text-5xl" : "text-4xl sm:text-3xl"
+        }`}
+      >
+        Tag {day.day}
+      </h2>
+    </div>
+
+    <div className="text-lg tracking-tight sm:pt-1">
+      {Object.values(day.habits).map((isChecked, index) => (
+        <span key={index}>{isChecked ? "●" : "○"}</span>
+      ))}
+    </div>
+  </div>
+
+  <p className="mt-5 text-sm font-black">
+    {completedHabits}/3 erledigt
+  </p>
+</div>
     </button>
 
     {isOpen && (
